@@ -26,7 +26,8 @@
  // Define size of the dataset
  #define DATASET_SIZE 40
 
- int counter = 0;
+ int mean, median, min, max;
+
  int main() {
 
  // Dataset from Alex Fosdick's sample implementation
@@ -35,35 +36,35 @@
                                          200, 122, 150,  90,  92,  87, 177, 244,
                                          201,   6,  12,  60,   8,   2,   5,  67,
                                            7,  87, 250, 230,  99,   3, 100,  90};
-    sort_array(test);
+    print_array(test);
  }
 
  int find_maximum(unsigned char dataset[]) {
      // Since all values are guaranteed to be positive, initialize to zero.
-     int cur_max = 0;
+     max = 0;
      for (int i = 0; i <= DATASET_SIZE; i++) {
-        if (dataset[i] > cur_max) {
-            cur_max = dataset[i];
+        if (dataset[i] > max) {
+            max = dataset[i];
         }
      }
-     return cur_max;
+     return max;
  }
 
  int find_minimum(unsigned char dataset[]) {
     // Initialize to max integer value.
-    int cur_min = 2147483627;
+    min = 2147483627;
     int i;
 
     // Iterate through array keeping track of smallest value seen.
     for (i = 0; i <= DATASET_SIZE; i++) {
-        if (dataset[i] < cur_min) {
-            cur_min = dataset[i];
+        if (dataset[i] < mirn) {
+            min = dataset[i];
         }
      }
-     return cur_min;
+     return min;
  }
 
- unsigned char partition_array(unsigned char dataset[], int left, int right) {
+ unsigned char partition_array(unsigned char* dataset, int left, int right) {
 
       int pivot = left;
       int i = left;
@@ -102,7 +103,7 @@
 
 }
 
- unsigned char sort_array(unsigned char dataset[]) {
+ void sort_array(unsigned char* dataset) {
     int left = 0;
     int right = DATASET_SIZE - 1;
 
@@ -111,28 +112,41 @@
     return dataset;
  }
 
-  int find_median(unsigned char dataset[]) {
-     unsigned char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
-     int median_1;
-     int median_2;
+void find_median(unsigned char* dataset) {
+    sort_array(dataset);
+    int median_1;
+    int median_2;
 
-     if (DATASET_SIZE % 2) {
+    if (DATASET_SIZE % 2) {
         median_1 = DATASET_SIZE / 2;
         median_2 = median_1 + 1;
-     } else {
-         median_1 = median_2 = DATASET_SIZE / 2 + 1;
-     }
+    } else {
+        median_1 = median_2 = DATASET_SIZE / 2 + 1;
+    }
+    median = 0.5 * (dataset[median_1] + dataset[median_2]);
+}
 
-     return 0.5 * (sorted_dataset[median_1] + sorted_dataset[median_2]);
-
- }
-
- find_mean(unsigned char dataset[]) {
-     unsigned char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
-     unsigned float weight = 1 / DATASET_SIZE;
+void find_mean(unsigned char* dataset) {
+     sort_array(dataset);
+     float weight = 1 / DATASET_SIZE;
      int mean, i;
      for (i = 0; i <= DATASET_SIZE; i++) {
         mean += weight * dataset[i];
      }
-     return mean
- }
+     return mean;
+}
+
+void print_array(unsigned char dataset[]) {
+    int i;
+    for (i = 0; i < DATASET_SIZE; i++) {
+        if (i % 8 == 0) {
+            printf("\n");
+        }
+        printf("%4.d", dataset[i]);
+    }
+}
+
+void print_statistics() {
+
+
+}

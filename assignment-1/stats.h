@@ -90,6 +90,6 @@
  *
  * @return char[40] The sorted array.
  */
-unsigned char sort_array(unsigned char dataset[]);
+ void sort_array(unsigned char* dataset);
 
 #endif // STATS_H_INCLUDED
