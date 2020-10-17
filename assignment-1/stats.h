@@ -62,7 +62,7 @@
  * @param right The right pointer of the partition.
  *
  */
- unsigned char partition_array(unsigned char* dataset, int left, int right)
+ unsigned char partition_array(unsigned char* dataset, int left, int right);
 
 /**
  * @brief Sorts the array in place, by implementing quicksort.
@@ -104,17 +104,24 @@
  */
  void find_mean(unsigned char* dataset);
 
-/**
- * @brief Sorts the array in place, by implementing quicksort.
+ /**
+ * @brief Prints the input array in a 5 x 8 format.
  *
- * This function takes as an input an array of size 40
- * where each element is an unsigned 8-bit char. It implements
- * the quicksort algorithm with average time complexity of O(nlogn).
- * The function will return the modified array.
+ * This function loops through each element, and prints
+ * out the array in 2D format, with 5 rows and 8 columns.
  *
  * @param dataset The dataset of size 40.
+ */
+ void print_array(unsigned char* dataset);
+
+/**
+ * @brief Prints out the dataset statistics.
  *
- * @return char[40] The sorted array.
+ * This function prints the original dataset, and
+ * sorted dataset. The mean, median, minimum, and maximum
+ * value are also printed to the console.
+ *
+ * @param dataset The dataset of size 40.
  */
  void print_statistics(unsigned char* dataset);
 
