@@ -20,6 +20,9 @@
  * @see https://www.coursera.org/learn/introduction-embedded-systems
  */
 
+#ifndef STATS_H_INCLUDED
+#define STATS_H_INCLUDED
+
 
 /**
  * @brief Finds the median value of an array of values.
@@ -33,7 +36,7 @@
  *
  * @return int The median value of the dataset.
  */
-unsigned int find_median(unsigned char dataset);
+ int find_median(unsigned char dataset[]);
 
 
 /**
@@ -47,7 +50,7 @@ unsigned int find_median(unsigned char dataset);
  *
  * @return int The mean value rounded down to the nearest integer.
  */
-unsigned int find_mean(unsigned char dataset);
+ int find_mean(unsigned char dataset[]);
 
 /**
  * @brief Finds the maximum value of an array of values.
@@ -60,7 +63,7 @@ unsigned int find_mean(unsigned char dataset);
  *
  * @return int The maximum value of the dataset.
  */
-unsigned int find_maximum(unsigned char dataset);
+ int find_maximum(unsigned char dataset[]);
 
 /**
  * @brief Finds the minimum value of an array of values.
@@ -73,7 +76,7 @@ unsigned int find_maximum(unsigned char dataset);
  *
  * @return int The minimum value of the dataset.
  */
-unsigned int find_minimum(unsigned char dataset);
+ int find_minimum(unsigned char dataset[]);
 
 /**
  * @brief Sorts the array in place, by implementing quicksort.
@@ -87,4 +90,6 @@ unsigned int find_minimum(unsigned char dataset);
  *
  * @return char[40] The sorted array.
  */
-unsigned char sort_array(unsigned char dataset);
+unsigned char sort_array(unsigned char dataset[]);
+
+#endif // STATS_H_INCLUDED
