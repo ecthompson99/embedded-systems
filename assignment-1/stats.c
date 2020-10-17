@@ -26,7 +26,7 @@
  // Define size of the dataset
  #define DATASET_SIZE 40
 
-
+ int counter = 0;
  int main() {
 
  // Dataset from Alex Fosdick's sample implementation
@@ -37,36 +37,9 @@
                                            7,  87, 250, 230,  99,   3, 100,  90};
     sort_array(test);
  }
-/*
- int find_median(unsigned char dataset[]) {
-     unsigned char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
-     int median_1;
-     int median_2;
 
-     if (DATASET_SIZE % 2) {
-        median_1 = DATASET_SIZE / 2;
-        median_2 = median_1 + 1;
-
-     } else {
-         median_1 = median_2 = DATASET_SIZE / 2 + 1;
-     }
-     return 0.5 * (sorted_dataset[median_1] + sorted_dataset[median_2]);
-
- }
-
- find_mean(unsigned char dataset[]) {
-     char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
-     unsigned float weight = 1 / DATASET_SIZE;
-     int mean;
-     int i;
-     for (i = 0; i <= DATASET_SIZE; i++) {
-        mean += weight * dataset[i];
-     }
-     return mean
- }
-*/
  int find_maximum(unsigned char dataset[]) {
-     // Since all values are guaranteed to be positive.
+     // Since all values are guaranteed to be positive, initialize to zero.
      int cur_max = 0;
      for (int i = 0; i <= DATASET_SIZE; i++) {
         if (dataset[i] > cur_max) {
@@ -80,6 +53,8 @@
     // Initialize to max integer value.
     int cur_min = 2147483627;
     int i;
+
+    // Iterate through array keeping track of smallest value seen.
     for (i = 0; i <= DATASET_SIZE; i++) {
         if (dataset[i] < cur_min) {
             cur_min = dataset[i];
@@ -89,52 +64,75 @@
  }
 
  unsigned char partition_array(unsigned char dataset[], int left, int right) {
-      int pivot = left - 1;
-      int original_left = left;
-      int original_right = right;
+
+      int pivot = left;
+      int i = left;
+      int j = right;
       int temp;
-      while (left <= right) {
-            if ((left[dataset] > pivot) && (right[dataset] < pivot)) {
-                printf("\nSwapping %d and %d\n", dataset[left], dataset[right]);
-                temp = dataset[left];
-                dataset[left] = dataset[right];
-                dataset[right] = temp;
-                left++;
-                right--;
-            } else if (dataset[left] > pivot) {
-                right--;
-                printf("\n2\n");
-            } else if (dataset[right] < pivot) {
-                left++;
-                printf("\n3\n");
-            }
 
-            printf("\n");
-            for (int i = 0; i <= DATASET_SIZE; i++) {
-                if (i % 8 == 0) {
-                    printf("\n");
-            }
-                printf("%d ", dataset[i]);
-        }
+      if (left < right) {
+          while (i < j) {
+                // Increment left pointer until a value larger than the pivot is found.
+                while (dataset[i] <= dataset[pivot] && i < right) {
+                    i++;
+                }
+                // Decrement right pointer until a value smaller than the pivot is found.
+                while (dataset[j] > dataset[pivot]) {
+                    j--;
+                }
+                // Swap values if the right pointer is still ahead of the left pointer.
+                if (i < j) {
+                    temp = dataset[i];
+                    dataset[i] = dataset[j];
+                    dataset[j] = temp;
+                }
+          }
 
-        }
-        temp = dataset[right];
-        dataset[right] = pivot;
-        dataset[0] = temp;
+        // Swap pivot value with middle partition value.
+        temp = dataset[j];
+        dataset[j] = dataset[pivot];
+        dataset[pivot] = temp;
 
-    // left partition
-    partition_array(dataset, original_left-1, right);
-    partition_array(dataset, left, original_right);
+        // Arrange left partition.
+        partition_array(dataset, left, j-1);
 
-  }
+        // Arrange right partition.
+        partition_array(dataset, j+1, right);
+      }
+
+}
 
  unsigned char sort_array(unsigned char dataset[]) {
-    int temp;
-    int left = 1;
+    int left = 0;
     int right = DATASET_SIZE - 1;
 
     partition_array(dataset, left, right);
 
     return dataset;
+ }
 
+  int find_median(unsigned char dataset[]) {
+     unsigned char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
+     int median_1;
+     int median_2;
+
+     if (DATASET_SIZE % 2) {
+        median_1 = DATASET_SIZE / 2;
+        median_2 = median_1 + 1;
+     } else {
+         median_1 = median_2 = DATASET_SIZE / 2 + 1;
+     }
+
+     return 0.5 * (sorted_dataset[median_1] + sorted_dataset[median_2]);
+
+ }
+
+ find_mean(unsigned char dataset[]) {
+     unsigned char sorted_dataset[DATASET_SIZE] = sort_array(dataset);
+     unsigned float weight = 1 / DATASET_SIZE;
+     int mean, i;
+     for (i = 0; i <= DATASET_SIZE; i++) {
+        mean += weight * dataset[i];
+     }
+     return mean
  }
