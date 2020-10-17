@@ -25,34 +25,6 @@
 
 
 /**
- * @brief Finds the median value of an array of values.
- *
- * This function takes as an input an array of size 40
- * where each element is an unsigned 8-bit char. It will
- * call a sort function and iterate through the sorted array
- * to identify the median value.
- *
- * @param dataset The dataset of size 40.
- *
- * @return int The median value of the dataset.
- */
- int find_median(unsigned char dataset[]);
-
-
-/**
- * @brief Finds the arithmetic mean of an array of values.
- *
- * This function takes as an input an array of size 40
- * where each element is an unsigned 8-bit char. It will
- * call a sort function and calculate the arithmetic mean.
- *
- * @param dataset The dataset of size 40.
- *
- * @return int The mean value rounded down to the nearest integer.
- */
- int find_mean(unsigned char dataset[]);
-
-/**
  * @brief Finds the maximum value of an array of values.
  *
  * This function takes as an input an array of size 40
@@ -79,6 +51,60 @@
  int find_minimum(unsigned char dataset[]);
 
 /**
+ * @brief Helper function, recursively partitions the array.
+ *
+ * This function takes as an input the indices of the left
+ * and right pointers of the partition, as well as the dataset
+ * to sort in place.
+ *
+ * @param dataset The dataset of size 40.
+ * @param left The left pointer of the partition.
+ * @param right The right pointer of the partition.
+ *
+ */
+ unsigned char partition_array(unsigned char* dataset, int left, int right)
+
+/**
+ * @brief Sorts the array in place, by implementing quicksort.
+ *
+ * This function takes as an input an array of size 40
+ * where each element is an unsigned 8-bit char. It implements
+ * the quicksort algorithm with average time complexity of O(nlogn).
+ * The function modifies the array in place.
+ *
+ * @param dataset The dataset of size 40.
+ *
+ */
+ void sort_array(unsigned char* dataset);
+
+ /**
+ * @brief Finds the median value of an array of values.
+ *
+ * This function takes as an input an array of size 40
+ * where each element is an unsigned 8-bit char. It will
+ * call a sort function and iterate through the sorted array
+ * to identify the median value.
+ *
+ * @param dataset The dataset of size 40.
+ *
+ * @return int The median value of the dataset.
+ */
+ void find_median(unsigned char* dataset);
+
+/**
+ * @brief Finds the arithmetic mean of an array of values.
+ *
+ * This function takes as an input an array of size 40
+ * where each element is an unsigned 8-bit char. It will
+ * call a sort function and calculate the arithmetic mean.
+ *
+ * @param dataset The dataset of size 40.
+ *
+ * @return int The mean value rounded down to the nearest integer.
+ */
+ void find_mean(unsigned char* dataset);
+
+/**
  * @brief Sorts the array in place, by implementing quicksort.
  *
  * This function takes as an input an array of size 40
@@ -90,6 +116,6 @@
  *
  * @return char[40] The sorted array.
  */
- void sort_array(unsigned char* dataset);
+ void print_statistics(unsigned char* dataset);
 
 #endif // STATS_H_INCLUDED

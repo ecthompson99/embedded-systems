@@ -21,6 +21,7 @@
  */
 
  #include <stdio.h>
+ #include <math.h>
  #include "stats.h"
 
  // Define size of the dataset
@@ -31,12 +32,12 @@
  int main() {
 
  // Dataset from Alex Fosdick's sample implementation
-    unsigned char test[DATASET_SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
-                                         114,  88,  45,  76, 123,  87,  25,  23,
-                                         200, 122, 150,  90,  92,  87, 177, 244,
-                                         201,   6,  12,  60,   8,   2,   5,  67,
-                                           7,  87, 250, 230,  99,   3, 100,  90};
-    print_array(test);
+    unsigned char dataset[DATASET_SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
+                                           114,  88,  45,  76, 123,  87,  25,  23,
+                                           200, 122, 150,  90,  92,  87, 177, 244,
+                                           201,   6,  12,  60,   8,   2,   5,  67,
+                                             7,  87, 250, 230,  99,   3, 100,  90};
+    print_statistics(dataset);
  }
 
  int find_maximum(unsigned char dataset[]) {
@@ -57,7 +58,7 @@
 
     // Iterate through array keeping track of smallest value seen.
     for (i = 0; i <= DATASET_SIZE; i++) {
-        if (dataset[i] < mirn) {
+        if (dataset[i] < min) {
             min = dataset[i];
         }
      }
@@ -65,7 +66,7 @@
  }
 
  unsigned char partition_array(unsigned char* dataset, int left, int right) {
-
+      // Implements in-place quicksort algorithm
       int pivot = left;
       int i = left;
       int j = right;
@@ -108,8 +109,6 @@
     int right = DATASET_SIZE - 1;
 
     partition_array(dataset, left, right);
-
-    return dataset;
  }
 
 void find_median(unsigned char* dataset) {
@@ -117,36 +116,55 @@ void find_median(unsigned char* dataset) {
     int median_1;
     int median_2;
 
-    if (DATASET_SIZE % 2) {
-        median_1 = DATASET_SIZE / 2;
+    if (DATASET_SIZE % 2 == 0) {
+        // If the set has an even number of values, there will be two middle values.
+        median_1 = DATASET_SIZE / 2 - 1;
         median_2 = median_1 + 1;
+        // Take the average of the two middle values.
+        median = 0.5 * (dataset[median_1] + dataset[median_2]);
     } else {
-        median_1 = median_2 = DATASET_SIZE / 2 + 1;
+        // If the set has an odd number of values, take the middle value.
+        median = (DATASET_SIZE - 1) / 2 ;
     }
-    median = 0.5 * (dataset[median_1] + dataset[median_2]);
 }
 
 void find_mean(unsigned char* dataset) {
      sort_array(dataset);
-     float weight = 1 / DATASET_SIZE;
-     int mean, i;
-     for (i = 0; i <= DATASET_SIZE; i++) {
-        mean += weight * dataset[i];
+     int i;
+     int sum = 0;
+     // Sum all values in the dataset, and divide by the length of the dataset.
+     for (i = 0; i < DATASET_SIZE; i++) {
+        sum += dataset[i];
      }
-     return mean;
+     mean = sum / DATASET_SIZE;
 }
 
-void print_array(unsigned char dataset[]) {
+void print_array(unsigned char* dataset) {
     int i;
     for (i = 0; i < DATASET_SIZE; i++) {
         if (i % 8 == 0) {
-            printf("\n");
+            printf("\n\t");
         }
         printf("%4.d", dataset[i]);
     }
 }
 
-void print_statistics() {
+void print_statistics(unsigned char* dataset) {
+    printf("\n\n ========== DATASET STATISTICS ==========\n\n");
+    printf("Original Dataset:\n");
+    print_array(dataset);
+    printf("\n\n");
+    printf("Sorted Dataset:\n");
+    sort_array(dataset);
+    print_array(dataset);
+    printf("\n\n");
 
+    find_mean(dataset);
+    find_median(dataset);
+    find_minimum(dataset);
+    find_maximum(dataset);
 
+    printf("\tMean: %d \t Min: %d\n\tMedian: %d \t Max: %d", mean, min, median, max);
+
+    printf("\n\n");
 }
